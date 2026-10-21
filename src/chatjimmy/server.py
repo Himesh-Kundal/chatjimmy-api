@@ -299,7 +299,7 @@ class OpenAIProxyHandler(BaseHTTPRequestHandler):
         logger.info("%s - - [%s] %s", self.address_string(), self.log_date_time_string(), format % args)
 
 
-def create_server(host: str = "127.0.0.1", port: int = 8000) -> ThreadingHTTPServer:
+def create_server(host: str = "127.0.0.1", port: int = 8383) -> ThreadingHTTPServer:
     server = ThreadingHTTPServer((host, port), OpenAIProxyHandler)
     server.daemon_threads = True
     return server
@@ -310,7 +310,7 @@ def main():
         description="Run an OpenAI-compatible proxy server for ChatJimmy (chatjimmy.ai)."
     )
     parser.add_argument("--host", default="127.0.0.1", help="Host to listen on (default: 127.0.0.1)")
-    parser.add_argument("--port", type=int, default=8000, help="Port to listen on (default: 8000)")
+    parser.add_argument("--port", type=int, default=8383, help="Port to listen on (default: 8383)")
     args = parser.parse_args()
 
     logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
