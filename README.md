@@ -219,6 +219,15 @@ Add the provider to your OpenCode configuration in `~/.config/opencode/opencode.
 ```json
 {
   "$schema": "https://opencode.ai/config.json",
+  "model": "chatjimmy/llama3.1-8B",
+  "agents": {
+    "build": {
+      "model": "chatjimmy/llama3.1-8B"
+    },
+    "plan": {
+      "model": "chatjimmy/llama3.1-8B"
+    }
+  },
   "providers": {
     "chatjimmy": {
       "name": "ChatJimmy",
@@ -228,7 +237,12 @@ Add the provider to your OpenCode configuration in `~/.config/opencode/opencode.
       },
       "models": {
         "llama3.1-8B": {
-          "name": "Llama 3.1 8B (ChatJimmy)"
+          "name": "Llama 3.1 8B (ChatJimmy)",
+          "limit": {
+            "context": 6144,
+            "input": 6000,
+            "output": 2048
+          }
         }
       }
     }
