@@ -190,6 +190,54 @@ Returns a list of `Model` objects.
 | top_k | int | 8 | Top-K sampling parameter |
 | attachment | Attachment | None | File attachment |
 
+## OpenAI-Compatible Proxy Server
+
+You can run `chatjimmy` as a local OpenAI-compatible proxy server. This allows you to connect OpenCode, Aider, Claude Code, Continue, or any other tool that speaks the OpenAI API protocol.
+
+### Start the Server
+
+```bash
+# Using Python module
+python -m chatjimmy.server --host 127.0.0.1 --port 8000
+
+# Or after pip installing:
+chatjimmy-server --host 127.0.0.1 --port 8000
+```
+
+The server provides:
+- `POST /v1/chat/completions` (streaming & non-streaming)
+- `GET /v1/models`
+- `GET /health`
+
+### Connecting to OpenCode
+
+Add the provider to your OpenCode configuration in `~/.config/opencode/opencode.json` (or `./opencode.json` in your project):
+
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "providers": {
+    "chatjimmy": {
+      "name": "ChatJimmy",
+      "package": "@opencode/ai/providers/openai-compatible",
+      "settings": {
+        "baseURL": "http://127.0.0.1:8000/v1"
+      },
+      "models": {
+        "llama3.1-8B": {
+          "name": "Llama 3.1 8B (ChatJimmy)"
+        }
+      }
+    }
+  }
+}
+```
+
+Reload OpenCode or start it with:
+```bash
+opencode run -m chatjimmy/llama3.1-8B "Explain recursion in one sentence"
+```
+
 ## Notes
 
 - No authentication required
